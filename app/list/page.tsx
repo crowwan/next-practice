@@ -3,8 +3,9 @@ function List() {
   return (
     <div>
       <h4 className="title">상품목록</h4>
-      {products.map((product) => (
+      {products.map((product, i) => (
         <div className="food">
+          <img src={`/food${i}.png`} className="food-img" />
           <h4>{product} $40</h4>
         </div>
       ))}

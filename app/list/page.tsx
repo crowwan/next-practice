@@ -1,5 +1,8 @@
 import { connectDB } from "@/util/database";
 import Link from "next/link";
+import ListItem from "./ListItem";
+
+import { Board } from "@/types/dataType";
 
 async function List() {
   const db = (await connectDB).db("board");
@@ -7,14 +10,7 @@ async function List() {
 
   return (
     <div className="list-bg">
-      {result.map((item) => (
-        <Link href={`/detail/${item._id}`}>
-          <div className="list-item" key={JSON.stringify(item._id)}>
-            <h4>{item.title}</h4>
-            <p>{item.content}</p>
-          </div>
-        </Link>
-      ))}
+      <ListItem result={result as Board[]} />
     </div>
   );
 }

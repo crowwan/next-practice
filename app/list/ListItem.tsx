@@ -1,22 +1,43 @@
+"use client";
+
 import { Board } from "@/types/dataType";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 function ListItem({ result }: { result: Board[] }) {
+  const [animate, setAnimate] = useState("");
   return (
     <>
       {result.map((item) => (
-        <div className="list-item" key={JSON.stringify(item._id)}>
+        <div className={`list-item ${animate}`} key={JSON.stringify(item._id)}>
           <h4>
             <Link href={`/detail/${item._id}`}>{item.title}</Link>
           </h4>
           <p>{item.content}</p>
           <Link href={`/edit/${item._id}`}>✏️ edit</Link>
           <button
-            onClick={() => {
-              fetch("/api/test", { method: "DELETE" }).then((_) =>
-                console.log("done")
-              );
+            onClick={(e) => {
+              (async () => {
+                await fetch(`/api/test?id=${item._id}`, {
+                  method: "DELETE",
+                })
+                  .then((res) => {
+                    if (res.status === 200) {
+                      return res.json();
+                    } else {
+                      return Promise.reject("error occurred");
+                    }
+                  })
+                  .then(() => {
+                    setAnimate("hide");
+                    setTimeout(() => {
+                      setAnimate("none");
+                    }, 510);
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
+              })();
             }}
           >
             🗑️ delete

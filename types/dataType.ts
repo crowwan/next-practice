@@ -1,6 +1,5 @@
-import { WithId } from "mongodb";
-
-export interface Board extends WithId<Document> {
+export interface Board {
+  _id: string;
   title: string;
   content: string;
 }

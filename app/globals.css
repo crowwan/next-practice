@@ -50,6 +50,8 @@ body {
   padding: 20px;
   margin-bottom: 5px;
   box-shadow: rgb(224, 224, 224) 0px 2px 4px 0px;
+  opacity: 1;
+  transition: opacity 0.5s;
 }
 .list-item h4 {
   font-size: 20px;
@@ -86,4 +88,11 @@ button {
   border: none;
   background-color: #fff;
   cursor: pointer;
+}
+
+.hide {
+  opacity: 0;
+}
+.none {
+  display: none;
 }

@@ -1,12 +1,15 @@
 import { connectDB } from "@/util/database";
-import Link from "next/link";
+
 import ListItem from "./ListItem";
 
 import { Board } from "@/types/dataType";
 
 async function List() {
   const db = (await connectDB).db("board");
-  const result = await db.collection("board").find().toArray();
+  const result = (await db.collection("board").find().toArray()).map((a) => ({
+    ...a,
+    _id: a._id.toString(),
+  }));
 
   return (
     <div className="list-bg">

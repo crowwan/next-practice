@@ -4,6 +4,8 @@ import ListItem from "./ListItem";
 
 import { Board } from "@/types/dataType";
 
+export const dynamic = "force-dynamic";
+
 async function List() {
   const db = (await connectDB).db("board");
   const result = (await db.collection("board").find().toArray()).map((a) => ({

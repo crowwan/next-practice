@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-const url = "mongodb+srv://crowlast:crowlast1215@board.c3sh4ji.mongodb.net/";
+const url = process.env.NEXT_PUBLIC_MONGODB_URL ?? "";
 let connectDB: Promise<MongoClient>;
 
 if (process.env.NODE_ENV === "development") {

@@ -26,8 +26,14 @@ export default async function RootLayout({
             Appleforum
           </Link>
           <Link href="/list">List</Link>
-          <Link href="/write">Write</Link>
-          {session?.user ? <LogoutBtn /> : <LoginBtn />}
+          {session?.user ? (
+            <>
+              <Link href="/write">Write</Link>
+              <LogoutBtn />
+            </>
+          ) : (
+            <LoginBtn />
+          )}
         </div>
         {children}
       </body>

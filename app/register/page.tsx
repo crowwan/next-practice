@@ -4,7 +4,7 @@ function Register() {
   return (
     <div>
       <form action="/api/auth/register" method="POST">
-        <input type="text" name="id" />
+        <input type="email" name="email" />
         <input type="password" name="password" />
         <button type="submit"> submit </button>
       </form>

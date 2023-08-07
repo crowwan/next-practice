@@ -1,6 +1,11 @@
+import { getServerSession } from "next-auth";
 import React from "react";
 
-function Write() {
+async function Write() {
+  const session = await getServerSession();
+  if (!session || !session.user) {
+    return <div>로그인이 필요합니다.</div>;
+  }
   return (
     <div>
       <h4>글 작성</h4>

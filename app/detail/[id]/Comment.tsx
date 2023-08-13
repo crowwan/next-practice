@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useRef } from "react";
+import { IComment } from "@/types/dataType";
+import React, { useEffect, useRef, useState } from "react";
 
 function Comment({ parentId }: { parentId: string }) {
   const commentRef = useRef<HTMLInputElement>(null);
-
+  const [comments, setComments] = useState<IComment[]>([]);
   const onClickHandler = () => {
     if (commentRef?.current?.value.length) {
       fetch("/api/comment", {
@@ -13,16 +14,44 @@ function Comment({ parentId }: { parentId: string }) {
       })
         .then((res) => {
           if (res.status === 201) {
+            return res.json();
           } else {
             return Promise.reject("error");
+          }
+        })
+        .then((res) => {
+          if (commentRef.current?.value) {
+            setComments((prev) => [
+              ...prev,
+              {
+                _id: res.insertedId as string,
+                content: commentRef.current?.value as string,
+                parentId,
+                author: res.author as string,
+              },
+            ]);
+            commentRef.current.value = "";
           }
         })
         .catch((err) => console.error(err));
     }
   };
+
+  useEffect(() => {
+    fetch(`/api/comment/?parentId=${parentId}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setComments(res);
+      });
+  }, []);
+
   return (
     <div>
-      <div></div>
+      <div>
+        {comments.map((comment) => (
+          <div>{comment.content}</div>
+        ))}
+      </div>
       <input type="text" ref={commentRef} />
       <button onClick={onClickHandler}>댓글 작성</button>
     </div>

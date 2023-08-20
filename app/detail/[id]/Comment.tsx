@@ -49,7 +49,10 @@ function Comment({ parentId }: { parentId: string }) {
     <div>
       <div>
         {comments.map((comment) => (
-          <div>{comment.content}</div>
+          <>
+            <div>{comment.content}</div>
+            <div>{comment.author}</div>
+          </>
         ))}
       </div>
       <input type="text" ref={commentRef} />

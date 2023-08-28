@@ -1,9 +1,11 @@
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import React from "react";
 
 async function Write() {
-  const session = await getServerSession();
-  if (!session || !session.user) {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
     return <div>로그인이 필요합니다.</div>;
   }
   return (

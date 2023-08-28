@@ -2,9 +2,13 @@ import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
 import React from "react";
 import Comment from "./Comment";
+import Header from "./Header";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 async function Detail({ params }: { params: { id: string } }) {
   const db = (await connectDB).db("board");
+  const session = await getServerSession(authOptions);
   const board = await db
     .collection("board")
     .findOne({ _id: new ObjectId(params.id) });
@@ -12,7 +16,7 @@ async function Detail({ params }: { params: { id: string } }) {
   return (
     <div>
       <h4>상세 페이지</h4>
-      <h4>{board?.title}</h4>
+      <Header title={board?.title} session={session} boardId={params.id} />
       <p>{board?.content}</p>
       <Comment parentId={params.id} />
     </div>

@@ -25,27 +25,25 @@ function Item({ item }: { item: Board }) {
       <Link href={`/edit/${item._id}`}>✏️ edit</Link>
       <button
         onClick={(e) => {
-          (async () => {
-            await fetch(`/api/test?id=${item._id}`, {
-              method: "DELETE",
+          fetch(`/api/test?id=${item._id}`, {
+            method: "DELETE",
+          })
+            .then((res) => {
+              if (res.status === 200) {
+                return res.json();
+              } else {
+                return Promise.reject("error occurred");
+              }
             })
-              .then((res) => {
-                if (res.status === 200) {
-                  return res.json();
-                } else {
-                  return Promise.reject("error occurred");
-                }
-              })
-              .then(() => {
-                setAnimate("hide");
-                setTimeout(() => {
-                  setAnimate("none");
-                }, 510);
-              })
-              .catch((err) => {
-                console.error(err);
-              });
-          })();
+            .then(() => {
+              setAnimate("hide");
+              setTimeout(() => {
+                setAnimate("none");
+              }, 510);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         }}
       >
         🗑️ delete

@@ -96,3 +96,7 @@ button {
 .none {
   display: none;
 }
+
+.board {
+  background-color: white;
+}

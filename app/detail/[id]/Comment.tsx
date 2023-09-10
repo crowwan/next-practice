@@ -7,7 +7,7 @@ function Comment({ parentId }: { parentId: string }) {
   const commentRef = useRef<HTMLInputElement>(null);
   const [comments, setComments] = useState<IComment[]>([]);
   const onClickHandler = () => {
-    if (commentRef?.current?.value.length) {
+    if (commentRef.current?.value.length) {
       fetch("/api/comment", {
         method: "POST",
         body: JSON.stringify({ content: commentRef.current.value, parentId }),
@@ -62,6 +62,14 @@ function Comment({ parentId }: { parentId: string }) {
 }
 
 export default Comment;
+
+// const bar = (a: string) => {
+//   a.split(' ');
+// }
+
+// const foo = (a: string | number) => {
+//   bar(a as string)
+// }
 
 // '/keyword/list/?type=자연'
 
